@@ -1,3 +1,10 @@
+
+def SingletonEager(cls):
+    instance = cls()
+    def getinstance():
+        return instance
+    return getinstance
+
 def singleton(cls):
     instances = {}
     def getinstance():
@@ -5,19 +12,34 @@ def singleton(cls):
             instances[cls] = cls()
         return instances[cls]
     return getinstance
- 
+
 class Counter:
     def __init__(self):
         self.count = 0
     def inc(self):
         self.count += 1
- 
-print(type(Counter))    # <type 'classobj'>
+
+EagerCounter = SingletonEager(Counter)
+OneCounter = SingletonOne(Counter)
 Counter = singleton(Counter)
-print(type(Counter))    # <type 'function'>
 
-c = Counter()
-b = Counter()
-
-assert(b == c)
+if __name__=="__main__":
+    a = Counter()
+    b = Counter()
+    assert(a == b)
+    a.inc()
+    assert(b.count == 1)
+    
+    
+    c = EagerCounter()
+    d = EagerCounter()
+    assert(c == d)
+    
+    c.inc()
+    assert(c.count == d.count)
+    assert(c.count == 1)
+    
+    e = OneCounter()
+    f = OneCounter()
+    assert(e == f)
 
