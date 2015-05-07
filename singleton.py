@@ -26,14 +26,14 @@ Counter = singleton(Counter)
 if __name__=="__main__":
     a = Counter()
     b = Counter()
-    assert(a == b)
+    assert(a is b)
     a.inc()
     assert(b.count == 1)
     
     
     c = EagerCounter()
     d = EagerCounter()
-    assert(c == d)
+    assert(c is d)
     
     c.inc()
     assert(c.count == d.count)
@@ -41,5 +41,5 @@ if __name__=="__main__":
     
     e = OneCounter()
     f = OneCounter()
-    assert(e == f)
+    assert(e is f)
 
